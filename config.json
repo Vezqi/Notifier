@@ -1,0 +1,5 @@
+{
+    "database": "shows.db",
+    "notificationChannel": "id",
+    "token": "token"
+}
