@@ -1,7 +1,6 @@
 const puppeteer = require('puppeteer');
 const anime = require('@justalk/anime-api');
 const axios = require('axios');
-
 const KICKASSANIME_SEARCH_URL = 'https://www2.kickassanime.rs/api/anime_search';
 
 const headers = {
@@ -42,9 +41,9 @@ module.exports = {
                 let showName = showArr[i];
                 let releaseTime = showArr[i + 1];
                 currentlyAiring.push({
+                    showName: showName,
                     dayOfWeek: dayOfWeek,
-                    releaseTime: releaseTime,
-                    showName: showName
+                    releaseTime: releaseTime
                 });
             }
         }
