@@ -1,6 +1,6 @@
+require('dotenv').config()
 const sqlImport = require('sqlite3').verbose();
-const config = require('../config.json');
-const sql = new sqlImport.Database(config.database);
+const sql = new sqlImport.Database(process.env.database);
 const moment = require('moment');
 const utils = require('../utils');
 
