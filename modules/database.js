@@ -3,10 +3,6 @@ const config = require('../config.json');
 const sql = new sqlImport.Database(config.database);
 const moment = require('moment');
 const utils = require('../utils');
-const events = require('events');
-const { emit } = require('process');
-
-const emitter = new events.EventEmitter();
 
 const dataTables = ['All', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
