@@ -50,5 +50,6 @@ module.exports = {
 
         await browser.close();
         return currentlyAiring;
+        
     }
 }
