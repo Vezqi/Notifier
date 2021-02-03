@@ -31,7 +31,7 @@ cron.schedule('*/30 * * * * *', async () => {
     let shows = await database.checkNew();
     for (var show of shows) {
         console.log(`A new episode of ${show.name} has released!`);
-        await client.channels.cache.get(process.env.notificationChannel).send(`A new episode of ${show.name} has released!`);
+        await client.channels.cache.get(process.env.notificationChannel).send(`\`$[${moment.HTML5_FMT.TIME_SECONDS}]\` A new episode of ${show.name} has released!`);
     }
 
 });
