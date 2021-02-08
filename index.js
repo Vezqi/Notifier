@@ -1,9 +1,7 @@
-const cron = require('node-cron');
 const fs = require('fs');
-const request = require('./modules/request'),
-      database = require('./modules/database');
+const tasks = fs.readdirSync('./src/tasks').filter((file) => file.endsWith('.js'));
 
-const utils = require('./utils');
+const utils = require('./src/utils');
 const Discord = require('discord.js'),
       client = new Discord.Client();
 
@@ -11,29 +9,14 @@ require('dotenv').config()
 
 client.on('ready', () => console.log('Connected to Discord!'));
 
-// Refresh our local data every 5 minutes and 30 seconds:
+// Need to figure out how to do this in TypeScript. This will determine if we move forward with the TS version. ↓
 
-cron.schedule('30 */5 * * * *', async () => {
-    try {
-        console.log('Running refresh task...');
-        let data = await request.fetchWebData();
-        await database.refresh(data);
-        console.log('Refresh task completed successfully.');
-    } catch (e) {
-        console.error(`Refresh task failed: ${e}`);
+for(var task of tasks) {
+    let registeredTask = require(`./src/tasks/${task}`);
+    if(registeredTask.enabled) {
+        registeredTask.run.start();
+        console.log(`${task} started`);
     }
-});
-
-// Check our database every minute to see if a new show has released: 
-
-cron.schedule('*/30 * * * * *', async () => {
-
-    let shows = await database.checkNew();
-    for (var show of shows) {
-        console.log(`A new episode of ${show.name} has released!`);
-        await client.channels.cache.get(process.env.notificationChannel).send(`\`$[${moment.HTML5_FMT.TIME_SECONDS}]\` A new episode of ${show.name} has released!`);
-    }
-
-});
+}
 
 client.login(process.env.token);

@@ -1,7 +1,4 @@
 const puppeteer = require('puppeteer');
-const anime = require('@justalk/anime-api');
-const axios = require('axios');
-const KICKASSANIME_SEARCH_URL = 'https://www2.kickassanime.rs/api/anime_search';
 
 const headers = {
     "accept": "*/*",
@@ -16,7 +13,6 @@ const headers = {
 }
 
 module.exports = {
-    name: 'request',
     fetchWebData: async () => {
         const url = 'https://www2.kickassanime.rs/';
         const browser = await puppeteer.launch();

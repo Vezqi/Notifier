@@ -25,10 +25,7 @@ const dataTables = ['All', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday
 
 module.exports = {
     name: 'database',
-    run: async() => {
-        
-    },
-
+    
     refresh: async(shows) => {
         sql.serialize(() => {
             dataTables.forEach((table) => {
