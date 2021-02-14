@@ -10,4 +10,10 @@ Work in progress, running into some issues when awaiting `database.listSubscript
 
 Alternatively, give the user a list of all airing shows from database, that way they can directly copy it and not have to work about any typos in the title. Alternatively, we could use a levenshtein distance function and compare the show the user is subscribed to and the name of the show in our database.
 
+- Notifications for animepahe/crunchyroll/funimation releases
+
+# Known issues
+
+- checkForNewEpisodes.js reports new episodes 8-ish hours early? Has to do with the timestamp of the VPS/the timestamp on the website we're pulling data from.
+
 Someday this will be less vague, let me know on [Twitter](https://twitter.com/Vezqi) if you want to collaborate. ^^

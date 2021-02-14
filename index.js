@@ -1,22 +1,25 @@
 const fs = require('fs');
-const tasks = fs.readdirSync('./src/tasks').filter((file) => file.endsWith('.js'));
-
-const utils = require('./src/utils');
-const Discord = require('discord.js'),
+      tasks = fs.readdirSync('./src/tasks').filter((task) => task.endsWith('.js')),
+      Discord = require('discord.js'),
       client = new Discord.Client();
 
-require('dotenv').config()
+require('./src/internal/database').init();
 
-client.on('ready', () => console.log('Connected to Discord!'));
+let numTasks = 0;
+    numEnabled = 0,
+    listOfTasks = '',
+    enabledTasks = '';
 
-// Need to figure out how to do this in TypeScript. This will determine if we move forward with the TS version. ↓
-
-for(var task of tasks) {
-    let registeredTask = require(`./src/tasks/${task}`);
-    if(registeredTask.enabled) {
-        registeredTask.run.start();
-        console.log(`${task} started`);
+for(const _task of tasks) {
+    numTasks += 1;
+    listOfTasks += _task + ' ';
+    let task = require(`./src/tasks/${_task}`);
+    if(task.enabled) {
+        numEnabled += 1;
+        enabledTasks += _task + ' ';
+        task.run.start();
     }
 }
 
+console.log(`Total tasks [${numTasks}]: ${listOfTasks}\nEnabled tasks [${numEnabled}]: ${enabledTasks}`)
 client.login(process.env.token);

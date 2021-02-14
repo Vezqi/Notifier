@@ -1,19 +1,9 @@
 const puppeteer = require('puppeteer');
-
-const headers = {
-    "accept": "*/*",
-    "accept-language": "ja,en;q=0.9,en-US;q=0.8,fr-CA;q=0.7,fr;q=0.6",
-    "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
-    "sec-ch-ua": "\"Google Chrome\";v=\"87\", \" Not;A Brand\";v=\"99\", \"Chromium\";v=\"87\"",
-    "sec-ch-ua-mobile": "?0",
-    "sec-fetch-dest": "empty",
-    "sec-fetch-mode": "cors",
-    "sec-fetch-site": "same-origin",
-    "x-requested-with": "XMLHttpRequest"
-}
+      axios = require('axios'),
+      parser = require('xml2json');
 
 module.exports = {
-    fetchWebData: async () => {
+    fetchCurrentlyAiringData: async () => {
         const url = 'https://www2.kickassanime.rs/';
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
@@ -47,5 +37,16 @@ module.exports = {
         await browser.close();
         return currentlyAiring;
         
+    },
+
+
+    // Fix https://i.imgur.com/pjh2qiN.png
+    checkNyaaNew: async () => {
+        let { data, status } = await axios.get('https://nyaa.si/?page=rss');
+        console.log(`Nyaa: Status code ${status}`);
+        let parsed = JSON.parse(parser.toJson(data));
+        return parsed.rss.channel.item;
+        
     }
+
 }
