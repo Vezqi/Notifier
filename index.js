@@ -13,6 +13,8 @@ const fs = require('fs');
 
 require('./src/internal/database').init();
 
+// TO DO: Remove async from functions that return promises. Probably causing 'async issues'
+
 let numTasks = 0;
     numEnabled = 0,
     listOfTasks = '',

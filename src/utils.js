@@ -6,8 +6,7 @@ const shortenedDaysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 module.exports = {
     getCurrentTimeFormatted: async() => {
-        let current = new Date();
-        return moment(current, 'HH:mm:ss').format('HH:mm');
+        return moment().format('h:mm:ss');
     },
 
     getCurrentDay: async() => {

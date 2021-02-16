@@ -131,7 +131,7 @@ const database = {
         });
     },
 
-    checkForNewEpisodes: async () => {
+    checkForNewEpisodes: () => {
         return new Promise((res, rej) => {
             sql.all(`SELECT * FROM 'All'`, async (err, rows) => {
                 if (err) {
@@ -140,31 +140,38 @@ const database = {
                     let currentDay = await utils.getCurrentDay();
                     let currentTime = await utils.getCurrentTimeFormatted();
                     let allShows = rows.filter((show) => show.day === currentDay && show.time === currentTime);
-                    if (allShows.length >= 1) {
+                    // Possibly need to remove this so that it resolves
+                    //if (allShows.length >= 1) { 
                         res(allShows);
-                    }
+                    // }
                 }
             });
         });
 
     },
 
-    sub: async (userId, show) => {
+    sub: (userId, show) => {
         // Maybe add a check to see if the show is airing? If it isn't, say that the show might not be airing
         return new Promise((res, rej) => {
             sql.run(`INSERT OR IGNORE INTO Airing(UserID, Title) VALUES (?, ?)`, [userId, utils.sqlEscape(show)], (err, rows) => {
                 if (err) {
                     rej(`An error occured while subscribing to that show: ${err}`);
+                } else {
+                    res(rows);
                 }
             });
         });
     },
 
     // this doesn't work for some reason. pls fix
-    listSubscriptions: async (userId) => {
+    listSubscriptions: (userId) => {
         return new Promise((res, rej) => {
             sql.all(`SELECT * FROM Users WHERE UserID = ?`, [userId], (err, rows) => {
-                res(rows);
+                if(err) {
+                    rej(`An error occured while listing subscription: ${err}`);
+                } else {
+                    res(rows);
+                }
             });
         });
     },
@@ -216,7 +223,7 @@ const database = {
         });
     },
 
-    getMostRecentNyaaGuidFromDatabase: async() => {
+    getMostRecentNyaaGuidFromDatabase: () => {
         return new Promise((res, rej) => {
             sql.all(`SELECT guid FROM 'Other' WHERE site = 'nyaa'`, (err, rows) => {
                 if(err) {
@@ -228,17 +235,19 @@ const database = {
         })
     },
 
-    setMostRecentNyaaGuid: async(newGuid) => {
+    setMostRecentNyaaGuid: (newGuid) => {
         return new Promise((res, rej) => {
             sql.run(`UPDATE Other SET guid = ? WHERE site = ?`, [newGuid, 'nyaa'], (err, rows) => {
                 if(rows) {
                     rej(`An error occurred when updating Nyaa's guid database record: ${err}`);
+                } else {
+                    res(rows);
                 }
             })
         });
     },
 
-    getNyaaShowById: async(id) => {
+    getNyaaShowById: (id) => {
         return new Promise((res, rej) => {
             sql.all(`SELECT * FROM 'Nyaa' WHERE guid = ?`, [id], (err, rows) => {
                 if(err) {
@@ -250,7 +259,7 @@ const database = {
         });
     },
 
-    checkForNewNyaaLinks: async () => {
+    checkForNewNyaaLinks: () => {
         return new Promise((res, rej) => {
             sql.all(`SELECT * FROM 'Nyaa'`, async (err, rows) => {
                 if (err) {
@@ -259,9 +268,8 @@ const database = {
                     let mostRecentNotifiedGuid = await database.getMostRecentNyaaGuidFromDatabase();
                     let parsedGuid = parseInt(mostRecentNotifiedGuid);
                     let nyaaLinks = rows.filter((row) => (row.guid > parsedGuid));
-                    if(nyaaLinks.length >= 1) {
-                        res(nyaaLinks);
-                    }
+                    // Previously checked to see if nyaaLinks had 1 or more values, and then resolved if so.
+                    res(nyaaLinks);
                 }
             });
         });
