@@ -25,7 +25,6 @@ for(const _task of tasks) {
     if(task.enabled) {
         numEnabled += 1;
         enabledTasks += _task + ' ';
-        // Pass dependencies as an object
         task.run({
             client: client,
             config: config,
