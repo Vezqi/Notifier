@@ -256,33 +256,12 @@ const database = {
                 if (err) {
                     rej(`Error checking database for new Nyaa links: ${err}`);
                 } else {
-                    // Replace this to see if current hh & mm from each row is equal to current time.
-                    /*
-
-                        TO DO:
-
-                        Send notification and then store guid in 'other' table. Check for new episodes and store new data. If the newest item's guid is greater
-                        than the last notified, then we have to determine how many items are in between that.
-                        For example:
-
-                        LastNotifiedGuid: 155055
-                        NewItem: 155058
-
-                        If we do this, then we only have to make the request every 5 minutes or so instead of every minute.
-
-                        We need to search or datebase WHERE guid = each number inbetween and then send a notification. After that, we can store the guid of the newest item.
-
-                    */
-
-
                     let mostRecentNotifiedGuid = await database.getMostRecentNyaaGuidFromDatabase();
                     let parsedGuid = parseInt(mostRecentNotifiedGuid);
-                    let nyaaLinks = rows.filter((row) => row.guid > parsedGuid);
-                    // console.log(nyaaLinks);
+                    let nyaaLinks = rows.filter((row) => (row.guid > parsedGuid));
                     if(nyaaLinks.length >= 1) {
                         res(nyaaLinks);
                     }
-
                 }
             });
         });

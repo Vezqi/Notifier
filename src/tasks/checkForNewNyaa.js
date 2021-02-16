@@ -18,7 +18,6 @@ module.exports = {
                     database.setMostRecentNyaaGuid(serverGuid);
                     console.log(`Successfully set most recent nyaa guid to ${serverGuid}`);
                 }
-
             } catch (e) {
                 console.error(`Failed to check for new Nyaa links: ${e}`);
             }
