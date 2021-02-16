@@ -1,15 +1,15 @@
 const moment = require('moment'),
-      momentTz = require('moment-timezone');
+    momentTz = require('moment-timezone');
 
 const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const shortenedDaysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 module.exports = {
-    getCurrentTimeFormatted: async() => {
+    getCurrentTimeFormatted: async () => {
         return moment().format('h:mm:ss');
     },
 
-    getCurrentDay: async() => {
+    getCurrentDay: async () => {
         return daysOfWeek[new Date().getDay()];
     },
 

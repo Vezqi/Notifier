@@ -140,10 +140,7 @@ const database = {
                     let currentDay = await utils.getCurrentDay();
                     let currentTime = await utils.getCurrentTimeFormatted();
                     let allShows = rows.filter((show) => show.day === currentDay && show.time === currentTime);
-                    // Possibly need to remove this so that it resolves
-                    //if (allShows.length >= 1) { 
-                        res(allShows);
-                    // }
+                    res(allShows);
                 }
             });
         });
@@ -167,7 +164,7 @@ const database = {
     listSubscriptions: (userId) => {
         return new Promise((res, rej) => {
             sql.all(`SELECT * FROM Users WHERE UserID = ?`, [userId], (err, rows) => {
-                if(err) {
+                if (err) {
                     rej(`An error occured while listing subscription: ${err}`);
                 } else {
                     res(rows);
@@ -226,7 +223,7 @@ const database = {
     getMostRecentNyaaGuidFromDatabase: () => {
         return new Promise((res, rej) => {
             sql.all(`SELECT guid FROM 'Other' WHERE site = 'nyaa'`, (err, rows) => {
-                if(err) {
+                if (err) {
                     res(`Failed to obtain guid from database: ${err}`);
                 } else {
                     res(rows[0].guid);
@@ -238,7 +235,7 @@ const database = {
     setMostRecentNyaaGuid: (newGuid) => {
         return new Promise((res, rej) => {
             sql.run(`UPDATE Other SET guid = ? WHERE site = ?`, [newGuid, 'nyaa'], (err, rows) => {
-                if(rows) {
+                if (rows) {
                     rej(`An error occurred when updating Nyaa's guid database record: ${err}`);
                 } else {
                     res(rows);
@@ -250,7 +247,7 @@ const database = {
     getNyaaShowById: (id) => {
         return new Promise((res, rej) => {
             sql.all(`SELECT * FROM 'Nyaa' WHERE guid = ?`, [id], (err, rows) => {
-                if(err) {
+                if (err) {
                     rej(`An error occurred when querying that nyaa guid: ${err}`);
                 } else {
                     res(rows[0]);

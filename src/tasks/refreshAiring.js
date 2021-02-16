@@ -5,7 +5,7 @@ module.exports = {
         database,
         request
     }) => {
-        cron.schedule('30 */5 * * * *', async () => {
+        cron.schedule('15 */5 * * * *', async () => {
             try {
                 console.log('Running airing show refresh task...');
                 let data = await request.fetchCurrentlyAiringData();

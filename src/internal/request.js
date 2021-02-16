@@ -41,7 +41,9 @@ const request = {
     },
 
     checkNyaaNew: async () => {
-        let { body } = await got('https://nyaa.si/?page=rss');
+        let {
+            body
+        } = await got('https://nyaa.si/?page=rss');
         let parsed = JSON.parse(parser.toJson(body));
         return parsed.rss.channel.item;
 

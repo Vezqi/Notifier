@@ -7,7 +7,7 @@ module.exports = {
         moment,
         config
     }) => {
-        cron.schedule('*/60 * * * * *', async () => {
+        cron.schedule('*/45 * * * * *', async () => {
             try {
                 console.log('Checking for new shows...');
                 let shows = await database.checkForNewEpisodes();
