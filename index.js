@@ -1,7 +1,15 @@
 const fs = require('fs');
       tasks = fs.readdirSync('./src/tasks').filter((task) => task.endsWith('.js')),
       Discord = require('discord.js'),
-      client = new Discord.Client();
+      client = new Discord.Client(),
+      cron = require('node-cron'),
+      request = require('./src/internal/request'),
+      database = require('./src/internal/database'),
+      utils = require('./src/utils'),
+      moment = require('moment'),
+      momentTz = require('moment-timezone'),
+      got = require('got'),
+      config = require('dotenv').config().parsed;
 
 require('./src/internal/database').init();
 
@@ -17,7 +25,18 @@ for(const _task of tasks) {
     if(task.enabled) {
         numEnabled += 1;
         enabledTasks += _task + ' ';
-        task.run.start();
+        // Pass dependencies as an object
+        task.run({
+            client: client,
+            config: config,
+            cron: cron,
+            request: request,
+            database: database,
+            utils: utils,
+            moment: moment,
+            momentTz: momentTz,
+            got: got
+        });
     }
 }
 

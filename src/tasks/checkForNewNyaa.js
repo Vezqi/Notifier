@@ -1,22 +1,29 @@
-const cron = require('node-cron');
-const request = require('../internal/request'),
-    database = require('../internal/database');
-
-
 module.exports = {
     enabled: true,
-    run: cron.schedule('5 */1 * * * *', async () => {
-        try {
-            console.log('Checking for new nyaa links...');
-            let links = await database.checkForNewNyaaLinks();
-            for (var link of links) {
-                console.log(`New link on https://nyaa.si: ${link.title} | ${link.url}`);
-                await client.channels.cache.get(process.env.nyaaFeedChannel).send(`New link on https://nyaa.si: ${link.title} | ${link.url}`);
+    run: ({
+        cron,
+        database,
+        client,
+        config
+    }) => {
+        cron.schedule('30 */5 * * * *', async () => {
+            try {
+                console.log('Checking for new nyaa links...');
+                let rawLinks = await database.checkForNewNyaaLinks();
+                let links = rawLinks.reverse();
+                let serverGuid = links[links.length - 1].guid;
+                for (var link of links) {
+                    console.log(`New link on https://nyaa.si: ${link.title} | ${link.url}`);
+                    await client.channels.cache.get(config.nyaaFeedChannel).send(`New link on https://nyaa.si: ${link.title} | ${link.url}`);
+                    database.setMostRecentNyaaGuid(serverGuid);
+                    console.log(`Successfully set most recent nyaa guid to ${serverGuid}`);
+                }
+
+            } catch (e) {
+                console.error(`Failed to check for new Nyaa links: ${e}`);
             }
-        } catch (e) {
-            console.error(`Failed to check for new Nyaa links: ${e}`);
-        }
-    }, {
-        scheduled: false
-    })
+        }, {
+            scheduled: false
+        }).start();
+    }
 }

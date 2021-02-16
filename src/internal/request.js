@@ -1,8 +1,9 @@
 const puppeteer = require('puppeteer');
-      axios = require('axios'),
-      parser = require('xml2json');
+axios = require('axios'),
+    parser = require('xml2json'),
+    got = require('got');
 
-module.exports = {
+const request = {
     fetchCurrentlyAiringData: async () => {
         const url = 'https://www2.kickassanime.rs/';
         const browser = await puppeteer.launch();
@@ -36,17 +37,15 @@ module.exports = {
 
         await browser.close();
         return currentlyAiring;
-        
+
     },
 
-
-    // Fix https://i.imgur.com/pjh2qiN.png
     checkNyaaNew: async () => {
-        let { data, status } = await axios.get('https://nyaa.si/?page=rss');
-        console.log(`Nyaa: Status code ${status}`);
-        let parsed = JSON.parse(parser.toJson(data));
+        let { body } = await got('https://nyaa.si/?page=rss');
+        let parsed = JSON.parse(parser.toJson(body));
         return parsed.rss.channel.item;
-        
-    }
 
+    }
 }
+
+module.exports = request;
