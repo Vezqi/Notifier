@@ -11,9 +11,8 @@ tasks = fs.readdirSync('./src/tasks').filter((task) => task.endsWith('.js')),
     got = require('got'),
     config = require('dotenv').config().parsed;
 
+// Need to initialize 'other' table nyaa column with value.
 require('./src/internal/database').init();
-
-// TO DO: Remove async from functions that return promises. Probably causing 'async issues'
 
 let numTasks = 0;
 numEnabled = 0,

@@ -15,7 +15,7 @@ module.exports = {
                     let links = rawLinks.reverse();
                     let serverGuid = links.length > 1 ? links[links.length - 1].guid : links[0].guid;
                     for (var link of links) {
-                        let time = await utils.getCurrentTimeFormatted();
+                        let time = await utils.getMessageTimeFormat();
                         if (link.category === 'Anime - English-translated') {
                             console.log(`${link.title} | ${link.url}`);
                             await client.channels.cache.get(config.nyaaFeedChannel).send(`\`[${time}]\` ${link.title} | ${link.url}`);
