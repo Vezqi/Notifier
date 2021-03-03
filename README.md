@@ -1,6 +1,6 @@
 # Notifier
 
-Receive a message on Discord whenever a new show is is airing.
+Receive a message on Discord whenever a new episode of an anime airs/has released.
 
 # To-do
 
@@ -10,11 +10,11 @@ Receive a message on Discord whenever a new show is is airing.
 
 - Subscription implementation. Async issues put this to a temporary halt.
 
-- Message embeds instead of plain 'ole text messages.
+- Message embeds instead of plain boring text messages.
 
 # Known issues
 
-- checkForNewEpisodes.js reports new episodes 8-ish hours early? Has to do with the timestamp of the VPS/the timestamp on the website we're pulling data from.
+- None as far as I'm aware :)
 
 # Other
 
