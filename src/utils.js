@@ -5,12 +5,13 @@ const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Fri
 const shortenedDaysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 module.exports = {
+    // Timezone is in America/Los_Angeles due to location of VPS provider
     getCurrentTimeFormatted: async () => {
-        return moment().format('hh:mm');
+        return momentTz.tz('America/Los_Angeles').format('HH:mm');
     },
 
     getMessageTimeFormat: async() => {
-        return moment().format('hh:mm:ss');
+        return momentTz.tz('America/Los_Angeles').format('HH:mm:ss');
     },
 
     getCurrentDay: async () => {
