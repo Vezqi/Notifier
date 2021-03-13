@@ -1,8 +1,8 @@
 require('dotenv').config()
-const sqlImport = require('sqlite3').verbose();
-const sql = new sqlImport.Database(process.env.database);
-const moment = require('moment');
-const utils = require('../utils');
+const sqlImport = require('sqlite3').verbose(),
+      sql = new sqlImport.Database(process.env.database),
+      moment = require('moment'),
+      utils = require('../utils');
 
 const dataTables = ['All', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
@@ -235,7 +235,7 @@ const database = {
     setMostRecentNyaaGuid: (newGuid) => {
         return new Promise((res, rej) => {
             sql.run(`UPDATE Other SET guid = ? WHERE site = ?`, [newGuid, 'nyaa'], (err, rows) => {
-                if (rows) {
+                if (err) {
                     rej(`An error occurred when updating Nyaa's guid database record: ${err}`);
                 } else {
                     res(rows);
