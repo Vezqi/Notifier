@@ -80,6 +80,9 @@ let initializers = [
             "name"	TEXT,
             "time"	TEXT,
             PRIMARY KEY("index")
+        );`,
+    `CREATE TABLE IF NOT EXISTS "DanbooruCache" (
+            "html"	TEXT
         );`
 ];
 
@@ -270,7 +273,18 @@ const database = {
                 }
             });
         });
+    },
 
+    setDanbooruCache: (data) => {
+        return new Promise((res, rej) => {
+            sql.run(`INSERT INTO DanbooruCache(html) VALUES (?)`, [data], (err, rows) => {
+                if(err) {
+                    rej(`Error cache Danbooru request: ${err}`);
+                } else {
+                    res(rows);
+                }
+            });
+        });
     }
 
 }

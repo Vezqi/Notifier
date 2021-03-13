@@ -1,4 +1,5 @@
 const puppeteer = require('puppeteer');
+const database = require('./database');
       axios = require('axios'),
       parser = require('xml2json'),
       got = require('got'),
@@ -49,12 +50,13 @@ const request = {
         } = await got('https://nyaa.si/?page=rss');
         let parsed = JSON.parse(parser.toJson(body));
         return parsed.rss.channel.item;
-
     },
 
     getRandomDanbooruImage: async() => {
         let req = await got('https://danbooru.donmai.us/posts/random');
-        //let req = await got('https://danbooru.donmai.us/posts/4409778');
+        
+        await database.setDanbooruCache(req.body);
+
         let $ = cheerio.load(req.body);
         let postUrl = req.url;
 
