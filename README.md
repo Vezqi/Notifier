@@ -12,6 +12,16 @@ Receive a message on Discord whenever a new episode of an anime airs/has release
 
 - Message embeds instead of plain boring text messages.
 
+- Add filters for feed channels. 
+
+- Sync watchlists
+
+- Organize internal classes. I.e - request object will has subclasses to organize requests, per website.
+
+- Add command aliases
+
+- Cache randbooru requests
+
 # Known issues
 
 - None as far as I'm aware :)
