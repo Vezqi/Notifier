@@ -23,7 +23,7 @@ module.exports = {
 	            code: 'js'
 	        });
 	    } catch (err) {
-	        message.channel.send(`\`ERROR\` \`\`\`js\n${clean(err)}\n\`\`\``);
+	       await message.channel.send(`\`ERROR\` \`\`\`js\n${clean(err)}\n\`\`\``);
 	    }
 	},
 };
