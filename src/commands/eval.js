@@ -2,7 +2,7 @@ module.exports = {
 	name: 'eval',
 	description: 'Evaluates JavaScript code.',
 	adminOnly: true,
-	run: async({ message, args, client }) => {
+	run: async({ message, args, client, request, database, Discord }) => {
 		const clean = (text) => {
 		    if (typeof (text) === 'string') {
 		        return text.replace(/`/g, '`' + String.fromCharCode(8203)).replace(/@/g, '@' + String.fromCharCode(8203));
