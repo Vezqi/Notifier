@@ -4,7 +4,8 @@ module.exports = {
         client,
         cron,
         database,
-        config
+        config,
+        utils
     }) => {
         cron.schedule('*/60 * * * * *', async () => {
             try {
