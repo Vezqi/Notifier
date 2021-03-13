@@ -17,7 +17,7 @@ module.exports = {
             .addField('Favorites', res.favorites, true)
             .addField('Score', res.score, true)
             .addField('Size', `${res.size} (${res.dimensions.width}x${res.dimensions.height})`, true)
-            .addField('Source', `[Link](${src})`, true)
+            // .addField('Source', `[Link](${src})`, true) Returning undefined. :(
 
         await message.channel.send(embed);
 
