@@ -1,5 +1,5 @@
 module.exports = {
-    name: 'unsubscribe', 
+    name: 'unsub', 
     description: 'Unsubscribes a user from a show previously subscribed to.',
     usage: '[show name]',
     args: true,
