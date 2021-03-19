@@ -153,9 +153,9 @@ const database = {
     sub: (userId, show) => {
         // Maybe add a check to see if the show is airing? If it isn't, say that the show might not be airing
         return new Promise((res, rej) => {
-            sql.run(`INSERT OR IGNORE INTO Airing(UserID, Title) VALUES (?, ?)`, [userId, utils.sqlEscape(show)], (err, rows) => {
+            sql.run(`INSERT OR IGNORE INTO Users(UserID, Title) VALUES (?, ?)`, [userId, utils.sqlEscape(show)], (err, rows) => {
                 if (err) {
-                    rej(`An error occured while subscribing to that show: ${err}`);
+                    rej(`An error occured while subscribing user to show: ${err}`);
                 } else {
                     res(rows);
                 }
@@ -168,7 +168,7 @@ const database = {
         return new Promise((res, rej) => {
             sql.all(`SELECT * FROM Users WHERE UserID = ?`, [userId], (err, rows) => {
                 if (err) {
-                    rej(`An error occured while listing subscription: ${err}`);
+                    rej(`An error occured while listing user subscriptions: ${err}`);
                 } else {
                     res(rows);
                 }
@@ -176,12 +176,20 @@ const database = {
         });
     },
 
-    unsub: async (userid, show) => {
-
+    unsub: (userId, show) => {
+        return new Promise((res, rej) => {
+            sql.all(`DELETE FROM Users WHERE Title = ? AND UserID = ?`, [utils.sqlEscape(show), userId], (err, rows) => {
+                if(err) {
+                    rej(`An error occurred while unsubscribing user from show: ${err}`);
+                } else {
+                    res(rows);
+                }
+            });
+        });
     },
 
-    listCurrent: async () => {
-
+    listAiring: (type) => {
+        
     },
 
     refreshNyaa: async (data) => {
@@ -268,7 +276,6 @@ const database = {
                     let mostRecentNotifiedGuid = await database.getMostRecentNyaaGuidFromDatabase();
                     let parsedGuid = parseInt(mostRecentNotifiedGuid);
                     let nyaaLinks = rows.filter((row) => (row.guid > parsedGuid));
-                    // Previously checked to see if nyaaLinks had 1 or more values, and then resolved if so.
                     res(nyaaLinks);
                 }
             });
@@ -286,7 +293,6 @@ const database = {
             });
         });
     }
-
 }
 
 module.exports = database;

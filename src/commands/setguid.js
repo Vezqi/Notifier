@@ -1,6 +1,7 @@
 module.exports = {
 	name: 'setguid',
 	description: 'Updates the most recent Nyaa feed item\'s GUID in the database.',
+	usage: '[GUID]',
 	adminOnly: true,
 	args: true,
 	needsArgs: true,

@@ -1,5 +1,6 @@
 module.exports = {
 	name: 'eval',
+	usage: '[JavaScript code]',
 	description: 'Evaluates JavaScript code.',
 	adminOnly: true,
 	run: async({ message, args, client, request, database, Discord }) => {

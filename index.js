@@ -43,7 +43,8 @@ for (const _task of tasks) {
             utils: utils,
             moment: moment,
             momentTz: momentTz,
-            got: got
+            got: got,
+            Discord: Discord
         });
     }
 }
@@ -70,7 +71,7 @@ client.on('message', async(message) => {
     }
 
     if (cmd.args && !args.length && cmd.needsArgs) {
-    	let reply = `You didn't provide any arguments, ${message.author.username}!`;
+    	let reply = `You didn't provide any arguments, ${message.author.username}!\n`;
 
     	if (cmd.usage) {
     		reply += `\nUsage: \`${config.prefix}${cmd.name} ${cmd.usage}\``;
