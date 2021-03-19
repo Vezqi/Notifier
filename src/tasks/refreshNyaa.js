@@ -1,5 +1,5 @@
 module.exports = {
-    enabled: false,
+    enabled: true,
     run: ({
         cron,
         request,
