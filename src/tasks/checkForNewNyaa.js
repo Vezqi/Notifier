@@ -15,9 +15,9 @@ module.exports = {
                 if (rawLinks.length >= 1) {
                     let links = rawLinks.reverse();
                     let serverGuid = links.length > 1 ? links[links.length - 1].guid : links[0].guid;
+                    let color = utils.randColor();
                     console.log(links);
                     for (var link of links) {
-                        let color = utils.randColor();
                         if (link.category === 'Anime - English-translated') {
                             let embed = new Discord.MessageEmbed()
                                 .setTitle('New upload on Nyaa.si')
